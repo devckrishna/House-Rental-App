@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
 import 'package:house_rental_app/Explore-Service/Views/ExploreScreen.dart';
 import 'package:house_rental_app/Saved-Service/VIews/SavedScreen.dart';
 import 'package:house_rental_app/HomePage-Service/Views/HomeScreen.dart';
@@ -7,6 +8,7 @@ import 'package:house_rental_app/Profile-Service/Views/ProfileScreen.dart';
 import 'package:house_rental_app/Requests-Service/Views/RequestScreen.dart';
 
 import 'Constants.dart';
+import 'HomePage-Service/Controllers/HomePageController.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});

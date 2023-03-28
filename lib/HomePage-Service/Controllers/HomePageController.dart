@@ -4,12 +4,8 @@ import 'package:get/get.dart';
 import 'package:house_rental_app/Constants.dart';
 import 'package:house_rental_app/HomePage-Service/Models/Properties.dart';
 import 'package:http/http.dart' as http;
-import 'package:location/location.dart';
 
 class HomePageController extends GetxController {
-  late LocationData _currentPosition;
-  late String _address;
-  Location location = new Location();
   RxString homePageState = "RENT".obs;
   var properties = <Properties>[].obs;
   var nearYourLocation = <Properties>[].obs;
@@ -20,7 +16,6 @@ class HomePageController extends GetxController {
     super.onInit();
     getPropertiesNearYou();
     getTopRatedProperties();
-    fetchLocation();
   }
 
   toggleState() {
@@ -74,39 +69,5 @@ class HomePageController extends GetxController {
     Data data = Data.fromJson(jsonDecode(response.body)["data"]);
     topRatedProperties.assignAll(data.properties as Iterable<Properties>);
     // print(topRatedProperties.value[0].title);
-  }
-
-  void fetchLocation() async {
-    bool _serviceEnabled;
-    PermissionStatus _permissionGranted;
-
-    _serviceEnabled = await location.serviceEnabled();
-    if (!_serviceEnabled) {
-      _serviceEnabled = await location.requestService();
-      if (!_serviceEnabled) {
-        return;
-      }
-    }
-
-    _permissionGranted = await location.hasPermission();
-    if (_permissionGranted == PermissionStatus.denied) {
-      _permissionGranted = await location.requestPermission();
-      if (_permissionGranted != PermissionStatus.granted) {
-        return;
-      }
-    }
-
-    _currentPosition = await location.getLocation();
-    location.onLocationChanged.listen((LocationData currentLocation) {
-      _currentPosition = currentLocation;
-      print(_currentPosition.latitude);
-      print(_currentPosition.longitude);
-      // getAddress(_currentPosition.latitude, _currentPosition.longitude)
-      //     .then((value) {
-      //   setState(() {
-      //     _address = "＄{value.first.addressLine}";
-      //   });
-      // });
-    });
   }
 }
